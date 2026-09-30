@@ -33,7 +33,7 @@ const facts = [
 
 export function Backing() {
   return (
-    <section id="backing" className="scroll-mt-16 mx-auto max-w-7xl px-4 py-20 sm:px-6">
+    <section id="backing" className="scroll-mt-24 mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
         <div>
           <Label className="text-copper">What you actually hold</Label>
@@ -49,9 +49,9 @@ export function Backing() {
 
         <ul className="grid gap-4 sm:grid-cols-2">
           {facts.map((fact) => (
-            <li key={fact.title} className="card p-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-copper/10 text-copper">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <li key={fact.title} className="card glass-hover p-6">
+              <span className="ingot flex h-11 w-11 items-center justify-center rounded-full">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
                   {fact.icon}
                 </svg>
               </span>

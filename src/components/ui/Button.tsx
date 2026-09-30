@@ -3,8 +3,8 @@ import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 /*
- * One filled button — the ingot, in copper — because pressing it is the
- * act the page exists for. Everything else is a ghost.
+ * One filled button — the ingot, poured in molten metal — because pressing
+ * it is the act the page exists for. Everything else is glass.
  */
 const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors duration-150 disabled:cursor-not-allowed select-none";
@@ -18,9 +18,9 @@ const sizes = {
 const variants = {
   solid: "ingot",
   ghost:
-    "text-bone ring-1 ring-rule-strong ring-inset hover:bg-bone hover:text-ink disabled:text-bone-muted disabled:hover:bg-transparent disabled:hover:text-bone-muted",
+    "ghost-glass text-bone disabled:text-bone-muted disabled:hover:bg-transparent",
   quiet:
-    "text-bone-soft hover:text-bone hover:bg-ink-3 disabled:text-bone-muted",
+    "text-bone-soft hover:text-bone hover:bg-white/6 disabled:text-bone-muted",
 } as const;
 
 type Variant = keyof typeof variants;

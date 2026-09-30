@@ -23,11 +23,11 @@ export function PreviewTag({ className }: { className?: string }) {
   return (
     <span
       className={clsx(
-        "t-label inline-flex items-center gap-1.5 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-copper",
+        "t-label inline-flex items-center gap-1.5 rounded-full bg-copper/12 px-2.5 py-1 text-copper ring-1 ring-inset ring-copper/35",
         className,
       )}
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-copper" />
+      <span className="h-1.5 w-1.5 rounded-full bg-copper shadow-[0_0_8px_1px_rgba(255,156,85,0.7)]" />
       Preview
     </span>
   );
@@ -43,15 +43,15 @@ export function Pill({
   tone?: "neutral" | "copper" | "gain" | "loss";
 }) {
   const tones = {
-    neutral: "border-rule-strong text-bone-soft",
-    copper: "border-copper/40 bg-copper/10 text-copper",
-    gain: "border-gain/40 bg-gain/10 text-gain",
-    loss: "border-loss/40 bg-loss/10 text-loss",
+    neutral: "ring-white/12 bg-white/4 text-bone-soft",
+    copper: "ring-copper/35 bg-copper/12 text-copper",
+    gain: "ring-gain/35 bg-gain/10 text-gain",
+    loss: "ring-loss/35 bg-loss/10 text-loss",
   } as const;
   return (
     <span
       className={clsx(
-        "t-label inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
+        "t-label inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 ring-1 ring-inset",
         tones[tone],
         className,
       )}

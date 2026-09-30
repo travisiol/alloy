@@ -26,19 +26,25 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="scroll-mt-16 border-y border-rule bg-ink-2/60">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+    <section id="how" className="scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
         <Label className="text-copper">How it works</Label>
         <h2 className="t-display mt-3 max-w-[20ch] text-bone">
           From a list of tickers to a token, in <em>one signature.</em>
         </h2>
 
-        <ol className="mt-12 grid gap-px overflow-hidden rounded-[18px] border border-rule bg-rule md:grid-cols-4">
-          {steps.map((step) => (
-            <li key={step.n} className="bg-ink-2 p-6">
-              <span className="t-label text-copper">{step.n}</span>
-              <h3 className="t-title mt-4 text-bone">{step.title}</h3>
-              <p className="t-body mt-3 text-bone-soft">{step.body}</p>
+        <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {steps.map((step, i) => (
+            <li key={step.n} className="card glass-hover relative overflow-hidden p-6">
+              {i === 2 && (
+                <span
+                  className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-copper/25 blur-3xl"
+                  aria-hidden
+                />
+              )}
+              <span className="t-figure molten-text relative">{step.n}</span>
+              <h3 className="t-title relative mt-5 text-bone">{step.title}</h3>
+              <p className="t-body relative mt-3 text-bone-soft">{step.body}</p>
             </li>
           ))}
         </ol>

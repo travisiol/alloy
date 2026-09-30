@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d0e11",
+  themeColor: "#05060a",
   colorScheme: "dark",
 };
 
@@ -57,15 +57,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="flex min-h-full flex-col bg-ink text-bone">
+      <body className="flex min-h-full flex-col bg-void text-bone">
+        <div className="nebula" aria-hidden />
+        <div className="grain-layer" aria-hidden />
         <Providers>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <div className="page flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1 pt-20">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

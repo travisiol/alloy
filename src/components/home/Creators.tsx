@@ -22,8 +22,8 @@ export function Creators() {
   const mgmtEarn = ((inflow * mgmtBps) / 10_000) * keep;
 
   return (
-    <section id="creators" className="scroll-mt-16 border-y border-rule bg-ink-2/60">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+    <section id="creators" className="scroll-mt-24">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center">
         <div>
           <Label className="text-copper">For creators</Label>
           <h2 className="t-display mt-3 text-bone">
@@ -33,7 +33,7 @@ export function Creators() {
             Set an entry fee between 0 and {fmtBps(limits.maxEntryFeeBps)} on
             every mint, and an optional management fee up to{" "}
             {fmtBps(limits.maxManagementFeeBps)} a year on what the vault holds.
-            {" "}{siteName()} keeps {fmtBps(limits.protocolFeeShareBps)} of what you
+            {" "}Alloy keeps {fmtBps(limits.protocolFeeShareBps)} of what you
             earn. The rest accrues to your address and is yours to claim whenever
             you like.
           </p>
@@ -44,17 +44,21 @@ export function Creators() {
               "No minimum audience. A vault with one holder works the same as a vault with a thousand.",
             ].map((line) => (
               <li key={line} className="t-body flex gap-3 text-bone-soft">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-copper" />
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-copper shadow-[0_0_8px_1px_rgba(255,156,85,0.6)]" />
                 {line}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="card p-6 sm:p-8">
-          <Label className="text-bone-soft">Fee calculator</Label>
+        <div className="card-raised relative overflow-hidden p-6 sm:p-8">
+          <span
+            className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-copper/20 blur-3xl"
+            aria-hidden
+          />
+          <Label className="relative text-bone-soft">Fee calculator</Label>
 
-          <div className="mt-6 flex flex-col gap-6">
+          <div className="relative mt-6 flex flex-col gap-6">
             <Control
               label="Entry fee"
               value={fmtBps(entryBps)}
@@ -84,7 +88,7 @@ export function Creators() {
             />
           </div>
 
-          <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-rule pt-6">
+          <dl className="relative mt-8 grid grid-cols-2 gap-4 border-t border-rule pt-6">
             <div>
               <dt className="t-label text-bone-muted">From entry fees</dt>
               <dd className="t-figure mt-2 text-bone">{fmtUsd(entryEarn)}</dd>
@@ -93,9 +97,9 @@ export function Creators() {
               <dt className="t-label text-bone-muted">From management</dt>
               <dd className="t-figure mt-2 text-bone">{fmtUsd(mgmtEarn)}</dd>
             </div>
-            <div className="col-span-2 rounded-xl bg-ink px-4 py-3">
+            <div className="well col-span-2 rounded-2xl px-5 py-4">
               <dt className="t-label text-copper">You keep</dt>
-              <dd className="t-figure mt-2 copper-text">
+              <dd className="t-figure molten-text mt-2">
                 {fmtUsd(entryEarn + mgmtEarn)}
               </dd>
               <p className="t-small mt-2 text-bone-muted">
@@ -109,10 +113,6 @@ export function Creators() {
       </div>
     </section>
   );
-}
-
-function siteName() {
-  return "Alloy";
 }
 
 function Control({

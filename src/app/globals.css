@@ -3,36 +3,39 @@
 /*
  * ALLOY — forge your own portfolio.
  *
- * The metaphor is the foundry: many metals poured into one stronger
- * material. The surface is dark graphite, the type is an editorial pairing
- * (a serif for the headlines, a clean grotesk for reading, a mono for every
- * number), and the only warmth on the page is copper — the colour of the
- * thing being forged. Copper marks value and action; nothing decorative
- * gets to use it.
+ * Direction: MOLTEN. The foundry taken literally, at the register of an
+ * onchain product: a near-black void, a slow nebula of copper heat and
+ * cooling steel, glass panels that catch the light, and one object — a
+ * liquid alloy — that is actually lit, reflected and moving. Copper is the
+ * only warm colour and it marks value and action; steel is the only cool
+ * one and it lives in the atmosphere, never on a control.
  */
 :root {
-  --graphite: #0d0e11;
-  --graphite-2: #13151a;
-  --graphite-3: #1a1d24;
-  --graphite-4: #23272f;
+  --void: #05060a;
+  --graphite: #0a0c11;
+  --graphite-2: #0f1218;
+  --graphite-3: #161a23;
+  --graphite-4: #1f2430;
 
-  --bone: #f4f1ea;
-  --bone-soft: #b9b4aa;
-  --bone-muted: #7d7970;
+  --bone: #f4f0e8;
+  --bone-soft: #b7b1a6;
+  --bone-muted: #78736a;
 
-  --copper: #e39a5f;
-  --copper-bright: #f5bf8a;
-  --copper-deep: #a8602c;
-  --copper-glow: rgba(227, 154, 95, 0.18);
+  --copper: #ff9c55;
+  --copper-bright: #ffd3a6;
+  --copper-deep: #b34c1a;
+  --copper-glow: rgba(255, 156, 85, 0.22);
 
-  --rule: rgba(244, 241, 234, 0.08);
-  --rule-strong: rgba(244, 241, 234, 0.18);
+  --steel: #8fb0d8;
+  --steel-deep: #30507a;
 
-  --gain: #4fd8a0;
-  --loss: #ff6b6b;
+  --rule: rgba(244, 240, 232, 0.07);
+  --rule-strong: rgba(244, 240, 232, 0.16);
 
-  /* Categorical palette for composition charts: metals, not rainbows. */
-  --metal-1: #e39a5f;
+  --gain: #52dfa5;
+  --loss: #ff6e6e;
+
+  --metal-1: #ff9c55;
   --metal-2: #d8c8a5;
   --metal-3: #9ab4c9;
   --metal-4: #7f8c99;
@@ -42,9 +45,18 @@
   --metal-8: #8a7bb0;
   --metal-9: #d1b3b3;
   --metal-10: #5f7a8c;
+
+  --molten: linear-gradient(
+    115deg,
+    #ffe0bd 0%,
+    #ffb26f 28%,
+    #ff8a3a 55%,
+    #c9541c 100%
+  );
 }
 
 @theme inline {
+  --color-void: var(--void);
   --color-ink: var(--graphite);
   --color-ink-2: var(--graphite-2);
   --color-ink-3: var(--graphite-3);
@@ -55,38 +67,42 @@
   --color-copper: var(--copper);
   --color-copper-bright: var(--copper-bright);
   --color-copper-deep: var(--copper-deep);
+  --color-steel: var(--steel);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
   --color-gain: var(--gain);
   --color-loss: var(--loss);
 
   --font-display:
+    "Inter Tight", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif:
     "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --font-sans:
     "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --radius-card: 18px;
+  --radius-card: 24px;
   --radius-pill: 999px;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--graphite);
+  background: var(--void);
 }
 
 body {
-  background: var(--graphite);
+  background: var(--void);
   color: var(--bone);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 ::selection {
   background: var(--copper);
-  color: var(--graphite);
+  color: var(--void);
 }
 
 :focus-visible {
@@ -94,37 +110,140 @@ body {
   outline-offset: 2px;
 }
 
+/* ---- Atmosphere -------------------------------------------------------- */
+
+/*
+ * The nebula: fixed, behind everything, two slow bodies of light — copper
+ * heat rising from the right, cooled steel falling from the left. It is
+ * the only place the cool colour is allowed.
+ */
+.nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.nebula::before,
+.nebula::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.nebula::before {
+  width: 70vw;
+  height: 70vw;
+  right: -25vw;
+  top: -20vw;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 138, 58, 0.34),
+    rgba(255, 138, 58, 0.1) 45%,
+    transparent 72%
+  );
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.nebula::after {
+  width: 60vw;
+  height: 60vw;
+  left: -25vw;
+  top: 30vh;
+  background: radial-gradient(
+    closest-side,
+    rgba(80, 120, 190, 0.28),
+    rgba(80, 120, 190, 0.08) 45%,
+    transparent 72%
+  );
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-8vw, 10vh, 0) scale(1.12);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(10vw, -8vh, 0) scale(0.92);
+  }
+}
+
+/* Grain over the whole page so the blurred light never bands. */
+.grain-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Everything the page draws sits above the atmosphere. */
+.page {
+  position: relative;
+  z-index: 2;
+}
+
 /* ---- Type ------------------------------------------------------------- */
 
 .t-hero {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(44px, 7.2vw, 104px);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-}
-
-.t-hero em,
-.t-display em,
-.t-title em {
-  font-style: italic;
-  color: var(--copper);
+  font-weight: 600;
+  font-size: clamp(46px, 7.4vw, 108px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
 }
 
 .t-display {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(32px, 4.2vw, 56px);
-  line-height: 1.04;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  font-size: clamp(32px, 4.4vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 .t-title {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  font-size: clamp(20px, 2.2vw, 26px);
   line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * The one flourish: the word that matters in every headline is set in the
+ * serif italic and filled with molten metal. Two typefaces on the same
+ * line, one of them poured.
+ */
+.t-hero em,
+.t-display em,
+.t-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
   letter-spacing: -0.01em;
+  background: var(--molten);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.06em;
+}
+
+.t-hero em {
+  font-size: 1.08em;
 }
 
 .t-lead {
@@ -153,7 +272,7 @@ body {
   font-weight: 500;
   font-size: 11px;
   line-height: 1.1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -166,123 +285,260 @@ body {
 }
 
 .t-figure {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: clamp(24px, 2.4vw, 34px);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 38px);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 
 .t-figure-sm {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 17px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
   line-height: 1.1;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- Surface ---------------------------------------------------------- */
+/* ---- Glass ------------------------------------------------------------ */
 
-.card {
-  background: var(--graphite-2);
-  border: 1px solid var(--rule);
+/*
+ * A glass panel: faint fill, blur of whatever light is behind it, and a
+ * hairline that is brighter where the light hits (top-left) and fades
+ * out. The border is a masked pseudo-element so it can be a gradient.
+ */
+.glass,
+.card,
+.card-raised {
+  position: relative;
   border-radius: var(--radius-card);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.055) 0%,
+      rgba(255, 255, 255, 0.02) 60%,
+      rgba(255, 255, 255, 0.035) 100%
+    ),
+    rgba(10, 12, 17, 0.55);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  backdrop-filter: blur(22px) saturate(1.3);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.8);
+}
+
+.glass::before,
+.card::before,
+.card-raised::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.06) 35%,
+    rgba(255, 255, 255, 0.03) 65%,
+    rgba(255, 156, 85, 0.22) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 
 .card-raised {
-  background: var(--graphite-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-card);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 60%,
+      rgba(255, 156, 85, 0.05) 100%
+    ),
+    rgba(15, 18, 24, 0.7);
 }
 
-/* Copper text, the way the wordmark is set. */
-.copper-text {
-  background: linear-gradient(
-    120deg,
-    var(--copper-bright) 0%,
-    var(--copper) 45%,
-    var(--copper-deep) 100%
-  );
+/* Glass that lights up on hover: the border warms, a glow appears under it. */
+.glass-hover {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 40px 80px -30px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 156, 85, 0.18),
+    0 20px 60px -20px rgba(255, 156, 85, 0.35);
+}
+
+/* A subtle inset well inside glass, for inputs and sub-panels. */
+.well {
+  background: rgba(5, 6, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Molten text, the way the wordmark is set. */
+.copper-text,
+.molten-text {
+  background: var(--molten);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* The ingot: a copper block with a brushed sheen, used for filled buttons. */
+/* ---- The ingot: the filled button -------------------------------------- */
+
 .ingot {
-  background: linear-gradient(
-    135deg,
-    var(--copper-bright) 0%,
-    var(--copper) 50%,
-    var(--copper-deep) 100%
-  );
-  color: var(--graphite);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--molten);
+  color: #1a0d05;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 8px 24px -10px rgba(227, 154, 95, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(120, 40, 0, 0.45),
+    0 0 0 1px rgba(255, 190, 130, 0.25),
+    0 10px 30px -8px rgba(255, 140, 60, 0.65),
+    0 24px 60px -20px rgba(255, 140, 60, 0.45);
   transition:
-    transform 150ms ease,
-    box-shadow 150ms ease,
-    filter 150ms ease;
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+/* A sheen that sweeps across on hover, like light over polished metal. */
+.ingot::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.15) 52%,
+    transparent 62%
+  );
+  transform: translateX(-70%);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
 }
 
 .ingot:hover:not(:disabled) {
-  filter: brightness(1.06);
   transform: translateY(-1px);
+  filter: brightness(1.05);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 12px 28px -10px rgba(227, 154, 95, 0.75);
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(120, 40, 0, 0.45),
+    0 0 0 1px rgba(255, 200, 150, 0.35),
+    0 14px 36px -8px rgba(255, 140, 60, 0.8),
+    0 30px 70px -20px rgba(255, 140, 60, 0.55);
+}
+
+.ingot:hover:not(:disabled)::after {
+  transform: translateX(70%);
+}
+
+.ingot:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .ingot:disabled {
   background: var(--graphite-3);
   color: var(--bone-muted);
-  box-shadow: none;
+  box-shadow: inset 0 0 0 1px var(--rule);
   cursor: not-allowed;
 }
 
-/* The forge glow behind the hero — a single warm source, low on the page. */
-.forge-glow {
-  background:
-    radial-gradient(
-      60% 55% at 50% 100%,
-      rgba(227, 154, 95, 0.22) 0%,
-      rgba(227, 154, 95, 0.06) 45%,
-      transparent 75%
-    ),
-    radial-gradient(
-      40% 30% at 20% 0%,
-      rgba(154, 180, 201, 0.06) 0%,
-      transparent 70%
-    );
+.ingot:disabled::after {
+  display: none;
 }
 
-/* Hairline grid on the hero, so the page reads as an instrument. */
+/* Ghost button in glass. */
+.ghost-glass {
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ghost-glass:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ---- Legacy hooks kept for the inner pages ----------------------------- */
+
+.forge-glow {
+  background: radial-gradient(
+    60% 55% at 50% 100%,
+    rgba(255, 156, 85, 0.2) 0%,
+    rgba(255, 156, 85, 0.05) 45%,
+    transparent 75%
+  );
+}
+
 .grid-lines {
   background-image:
     linear-gradient(to right, var(--rule) 1px, transparent 1px),
     linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
 }
 
-/* Fine noise, so large flat areas do not band. */
 .grain {
   position: relative;
 }
 
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* A hairline that fades at both ends: section dividers. */
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(244, 240, 232, 0.14) 20%,
+    rgba(244, 240, 232, 0.14) 80%,
+    transparent
+  );
 }
 
-/* Range inputs, in copper. */
+/* Molten hairline: the same, but hot. */
+.hairline-hot {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 156, 85, 0.6) 30%,
+    rgba(255, 210, 160, 0.9) 50%,
+    rgba(255, 156, 85, 0.6) 70%,
+    transparent
+  );
+}
+
+/* ---- Controls ---------------------------------------------------------- */
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -302,21 +558,23 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--bone);
-  border: 2px solid var(--copper);
+  background: var(--molten);
+  border: 2px solid var(--void);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(255, 190, 130, 0.5),
+    0 4px 14px rgba(255, 140, 60, 0.5);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--bone);
-  border: 2px solid var(--copper);
+  background: var(--copper);
+  border: 2px solid var(--void);
   cursor: pointer;
 }
 
@@ -331,7 +589,8 @@ input[type="number"] {
   appearance: textfield;
 }
 
-/* Ticker marquee for the asset strip. */
+/* ---- Motion ------------------------------------------------------------ */
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -342,7 +601,7 @@ input[type="number"] {
 }
 
 .animate-marquee {
-  animation: marquee 60s linear infinite;
+  animation: marquee 70s linear infinite;
 }
 
 .animate-marquee:hover {
@@ -353,14 +612,16 @@ input[type="number"] {
   0%,
   100% {
     opacity: 1;
+    box-shadow: 0 0 0 0 rgba(82, 223, 165, 0.5);
   }
   50% {
-    opacity: 0.35;
+    opacity: 0.6;
+    box-shadow: 0 0 0 5px rgba(82, 223, 165, 0);
   }
 }
 
 .live-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
+  animation: pulse-dot 2.2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -369,11 +630,19 @@ input[type="number"] {
   }
 
   .animate-marquee,
-  .live-dot {
+  .live-dot,
+  .nebula::before,
+  .nebula::after {
     animation: none;
   }
 
-  .ingot:hover:not(:disabled) {
+  .ingot:hover:not(:disabled),
+  .ghost-glass:hover:not(:disabled),
+  .glass-hover:hover {
     transform: none;
+  }
+
+  .ingot::after {
+    display: none;
   }
 }

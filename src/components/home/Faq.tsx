@@ -52,7 +52,7 @@ const entries = [
 
 export function Faq() {
   return (
-    <section id="faq" className="scroll-mt-16 mx-auto max-w-7xl px-4 py-20 sm:px-6">
+    <section id="faq" className="scroll-mt-24 mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <Label className="text-copper">Questions</Label>
       <h2 className="t-display mt-3 text-bone">
         Before you <em>sign.</em>

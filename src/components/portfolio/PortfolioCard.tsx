@@ -15,7 +15,7 @@ export function PortfolioCard({ portfolio }: { portfolio: Portfolio }) {
   return (
     <Link
       href={`/portfolios/${portfolio.slug}`}
-      className="card group flex flex-col gap-5 p-5 transition-colors hover:border-copper/40 hover:bg-ink-3"
+      className="card glass-hover group flex flex-col gap-5 p-5"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
@@ -23,22 +23,22 @@ export function PortfolioCard({ portfolio }: { portfolio: Portfolio }) {
             <span className="t-label text-copper">${portfolio.ticker}</span>
             {portfolio.preview && <PreviewTag />}
           </div>
-          <h3 className="t-title mt-1.5 truncate text-bone group-hover:text-copper-bright">
+          <h3 className="t-title mt-1.5 truncate text-bone">
             {portfolio.name}
           </h3>
         </div>
         <Donut holdings={portfolio.holdings} size={64} thickness={9} />
       </div>
 
-      <div className="flex items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-1.5">
         {shown.map((h) => (
-          <span key={h.symbol} className="flex items-center gap-1.5 rounded-full bg-ink px-1.5 py-1 pr-2.5">
+          <span key={h.symbol} className="well flex items-center gap-1.5 rounded-full px-1.5 py-1 pr-2.5">
             <AssetTile symbol={h.symbol} size={20} />
             <span className="t-mono text-bone-soft">{h.symbol}</span>
           </span>
         ))}
         {rest > 0 && (
-          <span className="t-mono rounded-full bg-ink px-2.5 py-1.5 text-bone-muted">
+          <span className="well t-mono rounded-full px-2.5 py-1.5 text-bone-muted">
             +{rest}
           </span>
         )}
