@@ -1,0 +1,379 @@
+@import "tailwindcss";
+
+/*
+ * ALLOY — forge your own portfolio.
+ *
+ * The metaphor is the foundry: many metals poured into one stronger
+ * material. The surface is dark graphite, the type is an editorial pairing
+ * (a serif for the headlines, a clean grotesk for reading, a mono for every
+ * number), and the only warmth on the page is copper — the colour of the
+ * thing being forged. Copper marks value and action; nothing decorative
+ * gets to use it.
+ */
+:root {
+  --graphite: #0d0e11;
+  --graphite-2: #13151a;
+  --graphite-3: #1a1d24;
+  --graphite-4: #23272f;
+
+  --bone: #f4f1ea;
+  --bone-soft: #b9b4aa;
+  --bone-muted: #7d7970;
+
+  --copper: #e39a5f;
+  --copper-bright: #f5bf8a;
+  --copper-deep: #a8602c;
+  --copper-glow: rgba(227, 154, 95, 0.18);
+
+  --rule: rgba(244, 241, 234, 0.08);
+  --rule-strong: rgba(244, 241, 234, 0.18);
+
+  --gain: #4fd8a0;
+  --loss: #ff6b6b;
+
+  /* Categorical palette for composition charts: metals, not rainbows. */
+  --metal-1: #e39a5f;
+  --metal-2: #d8c8a5;
+  --metal-3: #9ab4c9;
+  --metal-4: #7f8c99;
+  --metal-5: #c7a25c;
+  --metal-6: #b98a7a;
+  --metal-7: #6f9d8c;
+  --metal-8: #8a7bb0;
+  --metal-9: #d1b3b3;
+  --metal-10: #5f7a8c;
+}
+
+@theme inline {
+  --color-ink: var(--graphite);
+  --color-ink-2: var(--graphite-2);
+  --color-ink-3: var(--graphite-3);
+  --color-ink-4: var(--graphite-4);
+  --color-bone: var(--bone);
+  --color-bone-soft: var(--bone-soft);
+  --color-bone-muted: var(--bone-muted);
+  --color-copper: var(--copper);
+  --color-copper-bright: var(--copper-bright);
+  --color-copper-deep: var(--copper-deep);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-gain: var(--gain);
+  --color-loss: var(--loss);
+
+  --font-display:
+    "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-card: 18px;
+  --radius-pill: 999px;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--graphite);
+}
+
+body {
+  background: var(--graphite);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--copper);
+  color: var(--graphite);
+}
+
+:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 2px;
+}
+
+/* ---- Type ------------------------------------------------------------- */
+
+.t-hero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 7.2vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.t-hero em,
+.t-display em,
+.t-title em {
+  font-style: italic;
+  color: var(--copper);
+}
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+
+.t-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.t-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+}
+
+.t-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.t-small {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.t-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-figure {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-figure-sm {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Surface ---------------------------------------------------------- */
+
+.card {
+  background: var(--graphite-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+}
+
+.card-raised {
+  background: var(--graphite-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+}
+
+/* Copper text, the way the wordmark is set. */
+.copper-text {
+  background: linear-gradient(
+    120deg,
+    var(--copper-bright) 0%,
+    var(--copper) 45%,
+    var(--copper-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The ingot: a copper block with a brushed sheen, used for filled buttons. */
+.ingot {
+  background: linear-gradient(
+    135deg,
+    var(--copper-bright) 0%,
+    var(--copper) 50%,
+    var(--copper-deep) 100%
+  );
+  color: var(--graphite);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 8px 24px -10px rgba(227, 154, 95, 0.6);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    filter 150ms ease;
+}
+
+.ingot:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 28px -10px rgba(227, 154, 95, 0.75);
+}
+
+.ingot:disabled {
+  background: var(--graphite-3);
+  color: var(--bone-muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* The forge glow behind the hero — a single warm source, low on the page. */
+.forge-glow {
+  background:
+    radial-gradient(
+      60% 55% at 50% 100%,
+      rgba(227, 154, 95, 0.22) 0%,
+      rgba(227, 154, 95, 0.06) 45%,
+      transparent 75%
+    ),
+    radial-gradient(
+      40% 30% at 20% 0%,
+      rgba(154, 180, 201, 0.06) 0%,
+      transparent 70%
+    );
+}
+
+/* Hairline grid on the hero, so the page reads as an instrument. */
+.grid-lines {
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* Fine noise, so large flat areas do not band. */
+.grain {
+  position: relative;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Range inputs, in copper. */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--copper) 0%,
+    var(--copper) var(--fill, 0%),
+    var(--graphite-4) var(--fill, 0%),
+    var(--graphite-4) 100%
+  );
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bone);
+  border: 2px solid var(--copper);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bone);
+  border: 2px solid var(--copper);
+  cursor: pointer;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Ticker marquee for the asset strip. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .live-dot {
+    animation: none;
+  }
+
+  .ingot:hover:not(:disabled) {
+    transform: none;
+  }
+}
